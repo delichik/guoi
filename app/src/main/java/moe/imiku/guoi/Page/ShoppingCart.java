@@ -13,11 +13,11 @@ public class ShoppingCart extends PageLoader {
 
     @Override
     protected PageLoader subLoad() {
-        return null;
+        return this;
     }
 
     @Override
     protected PageLoader subUnLoad() {
-        return null;
+        return this;
     }
 }
