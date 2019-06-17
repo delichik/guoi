@@ -3,6 +3,9 @@ package moe.imiku.guoi.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,6 +13,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import moe.imiku.guoi.Adaptar.MyGridViewAdapter;
 import moe.imiku.guoi.Adaptar.MyViewPagerAdapter;
 import moe.imiku.guoi.DataProvider.PageConfigProvider;
 import moe.imiku.guoi.Model.PageConfig;
@@ -33,7 +37,6 @@ public class MainActivity extends Activity {
         ArrayList<PageConfig> configs = provider.getPageConfigs();
 
         ArrayList<PageLoader> view_list = new ArrayList<PageLoader>() {{
-//            add(new Home(MainActivity.this));
             try {
                 for (PageConfig config : configs) {
                     Constructor constructor = Class.forName("moe.imiku.guoi.Page." + config.getClass_name())
@@ -53,8 +56,26 @@ public class MainActivity extends Activity {
             for (PageConfig config : configs) {
                 add(config.getTitle());
             }
-//            add("主页");
         }};
+
+        ArrayList<View> nav_list = new ArrayList<View>() {{
+            for (int i = 0; i < configs.size(); i++){
+                PageConfig config = configs.get(i);
+
+                View view = View.inflate(MainActivity.this, R.layout.item_nav, null);
+                TextView textView = view.findViewById(R.id.title);
+                textView.setText(config.getTitle());
+                final int fi = i;
+                textView.setOnClickListener(v ->
+                        ((ViewPager)MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi));
+                add(view);
+            }
+        }};
+
         ((ViewPager)super.findViewById(R.id.pager)).setAdapter(new MyViewPagerAdapter(view_list, title_list));
+
+        GridView gridView = super.findViewById(R.id.nav);
+        gridView.setNumColumns(configs.size());
+        gridView.setAdapter(new MyGridViewAdapter(nav_list));
     }
 }
