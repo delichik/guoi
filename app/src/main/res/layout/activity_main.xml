@@ -8,6 +8,7 @@
     tools:context=".Activity.MainActivity">
 
     <androidx.viewpager.widget.ViewPager
+        android:overScrollMode="never"
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
