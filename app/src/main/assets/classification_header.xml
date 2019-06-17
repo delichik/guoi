@@ -1,0 +1,8 @@
+<root>
+    <class name="国产水果">
+        <item id="0" name="苹果" price="10" image=""/>
+    </class>
+    <class name="进口水果">
+        <item id="1" name="苹果" price="10" image=""/>
+    </class>
+</root>
