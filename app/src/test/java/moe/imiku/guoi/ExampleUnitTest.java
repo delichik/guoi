@@ -1,4 +1,4 @@
-package moe.imiku.enp.guoi;
+package moe.imiku.guoi;
 
 import org.junit.Test;
 

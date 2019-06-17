@@ -1,4 +1,4 @@
-package moe.imiku.enp.guoi;
+package moe.imiku.guoi;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("moe.imiku.enp.guoi", appContext.getPackageName());
+        assertEquals("moe.imiku.guoi", appContext.getPackageName());
     }
 }
