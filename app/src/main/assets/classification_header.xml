@@ -1,18 +1,47 @@
 <root>
     <class name="国产水果">
-        <item id="0" name="苹果" price="10" image=""/>
-        <item id="1" name="橘子" price="10" image=""/>
-        <item id="2" name="橘子" price="10" image=""/>
-        <item id="3" name="橘子" price="10" image=""/>
-        <item id="4" name="橘子" price="10" image=""/>
-        <item id="5" name="橘子" price="10" image=""/>
-        <item id="6" name="橘子" price="10" image=""/>
-        <item id="7" name="橘子" price="10" image=""/>
-        <item id="8" name="橘子" price="10" image=""/>
-        <item id="9" name="橘子" price="10" image=""/>
-        <item id="10" name="橘子" price="10" image=""/>
+        <item id="0" name="北京平台早露蟠桃" price="59.0" image="image/list01_item01_p0.jpg"/>
+        <item id="1" name="广东三华李" price="70.0" image="image/list01_item02_p0.jpg"/>
+        <item id="2" name="广西红金龙贵妃芒果" price="69.0" image="image/list01_item03_p0.jpg"/>
+        <item id="3" name="海南小青柠" price="45.0" image="image/list01_item04_p0.jpg"/>
+        <item id="4" name="辽宁特产绿宝香瓜" price="76.0" image="image/list01_item05_p0.jpg"/>
+        <item id="5" name="山东寿山樱桃番茄" price="29.8" image="image/list01_item06_p0.jpg"/>
+        <item id="6" name="上海南汇玉菇甜瓜" price="39.9" image="image/list01_item07_p0.jpg"/>
+        <item id="7" name="四川龙泉水蜜桃" price="86.6" image="image/list01_item08_p0.jpg"/>
+        <item id="8" name="云南三华李红心瓜子" price="158.0" image="image/list01_item09_p0.jpg"/>
+        <item id="9" name="云霄枇杷" price="68.0" image="image/list01_item10_p0.jpg"/>
     </class>
     <class name="进口水果">
-        <item id="11" name="桃子" price="10" image=""/>
+        <item id="11" name="澳大利亚无籽红提" price="46.0" image="image/list02_item01_p0.jpg"/>
+        <item id="12" name="菲律宾进口新鲜凤梨" price="59.0" image="image/list02_item02_p0.jpg"/>
+        <item id="13" name="美国加州樱桃" price="138.0" image="image/list02_item03_p0.jpg"/>
+        <item id="14" name="美国新奇士红心脐橙" price="68.0" image="image/list02_item04_p0.jpg"/>
+        <item id="15" name="美国新奇士柠檬" price="49.0" image="image/list02_item05_p0.jpg"/>
+        <item id="16" name="麒麟果燕窝果" price="125.0" image="image/list02_item06_p0.jpg"/>
+        <item id="17" name="台湾正宗水仙芒" price="108.0" image="image/list02_item07_p0.jpg"/>
+        <item id="18" name="新西兰Jazz爵士苹果" price="69.9" image="image/list02_item08_p0.jpg"/>
+        <item id="19" name="新鲜进口智利牛油果" price="49.9" image="image/list02_item09_p0.jpg"/>
+        <item id="20" name="越南红心火龙果" price="69.0" image="image/list02_item10_p0.jpg"/>
+    </class>
+    <class name="时令水果">
+        <item id="21" name="百香果西番莲" price="18.8" image="image/list03_item01_p0.jpg"/>
+        <item id="22" name="台湾释迦果" price="118.4" image="image/list03_item02_p0.jpg"/>
+        <item id="23" name="泰国进口龙眼" price="34.9" image="image/list03_item03_p0.jpg"/>
+        <item id="24" name="泰国椰青" price="28.9" image="image/list03_item04_p0.jpg"/>
+        <item id="25" name="无籽香水青柠檬" price="39.9" image="image/list03_item05_p0.jpg"/>
+    </class>
+    <class name="反季水果">
+        <item id="26" name="福建平和琯溪蜜柚白柚子" price="38.9" image="image/list04_item01_p0.jpg"/>
+        <item id="27" name="进口南非红心西柚" price="78.0" image="image/list04_item02_p0.jpg"/>
+        <item id="28" name="台湾红心芭乐番石榴" price="68.0" image="image/list04_item03_p0.jpg"/>
+        <item id="29" name="新西兰红玫瑰苹果" price="88.0" image="image/list04_item04_p0.jpg"/>
+        <item id="30" name="智利进口新鲜蓝莓" price="98.0" image="image/list04_item05_p0.jpg"/>
+    </class>
+    <class name="鲜果切">
+        <item id="31" name="进口金煌芒果" price="38.0" image="image/list05_item01_p0.jpg"/>
+        <item id="32" name="现切混拼盘" price="12.0" image="image/list05_item02_p0.jpg"/>
+        <item id="33" name="现切牛奶木瓜" price="12.0" image="image/list05_item03_p0.jpg"/>
+        <item id="34" name="现切脐橙" price="12.0" image="image/list05_item04_p0.jpg"/>
+        <item id="35" name="现切生态猕猴桃" price="12.0" image="image/list05_item05_p0.jpg"/>
     </class>
 </root>
