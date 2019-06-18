@@ -9,6 +9,6 @@
     <color name="text_grey">#BBBBBB</color>
     <color name="text_dark">#000000</color>
     <color name="background_accept">#39A839</color>
-    <color name="background_front">#DDDDDD</color>
-    <color name="divider">#4C4C4C</color>
+    <color name="background_front">#EEEEEE</color>
+    <color name="divider">#83494949</color>
 </resources>

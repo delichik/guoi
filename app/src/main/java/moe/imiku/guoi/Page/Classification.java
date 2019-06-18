@@ -1,7 +1,10 @@
 package moe.imiku.guoi.Page;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -35,9 +38,18 @@ public class Classification extends PageLoader {
         for(String str : fruitProvider.getClasses()){
             RadioButton _filed = new RadioButton(context);
             _filed.setText(str);
-            _filed.setBackground(null);
+            _filed.setBackgroundResource(R.drawable.class_radio_button);
+            _filed.setButtonDrawable(null);
+            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.width = dip2px(100);
+            params.height = dip2px(40);
+            _filed.setPadding(10, 0, 0, 0);
+            _filed.setLayoutParams(params);
             header_field.addView(_filed);
         }
+        header_field.check(header_field.getChildAt(0).getId());
         return this;
     }
 
@@ -62,5 +74,11 @@ public class Classification extends PageLoader {
     @Override
     protected PageLoader subUnLoad() {
         return null;
+    }
+
+    private int dip2px(float dipValue) {
+        Resources r = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, dipValue, r.getDisplayMetrics());
     }
 }
