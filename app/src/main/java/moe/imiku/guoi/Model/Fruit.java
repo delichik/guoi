@@ -4,7 +4,7 @@ public class Fruit {
     private String id;
     private String name;
     private double price;
-    private String image;
+    private String image = "image/default.jpg";
 
     public String getId() {
         return id;
@@ -35,6 +35,8 @@ public class Fruit {
     }
 
     public void setImage(String image) {
+        if (image.equals(""))
+            return;
         this.image = image;
     }
 }

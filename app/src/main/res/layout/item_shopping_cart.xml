@@ -10,6 +10,7 @@
         android:id="@+id/image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_start="80dp" />
+        app:layout_constraintGuide_begin="80dp" />
 
     <TextView
         android:layout_marginStart="8dp"
@@ -53,5 +54,58 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="150dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/cart_num_style"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/min"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="-" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/count"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="1"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="0.5sp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="2dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="+" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

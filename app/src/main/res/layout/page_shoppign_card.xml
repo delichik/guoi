@@ -6,20 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <TextView
+        android:textColor="@color/text_light"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:text="购物车"
+        android:background="@color/colorPrimary"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="50dp" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/guideline4"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/cart_field"
+            android:divider="@drawable/spacer_medium"
+            android:showDividers="middle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
         </LinearLayout>
+
     </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
@@ -30,23 +54,38 @@
         app:layout_constraintGuide_end="50dp" />
 
     <TextView
+        android:background="@color/background_front"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
         android:id="@+id/price_all"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textSize="20sp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/pay"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="150dp"
+        android:orientation="vertical" />
 
     <TextView
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@color/background_accept"
+        android:textColor="@color/text_light"
         android:id="@+id/pay"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="TextView"
+        android:text="支付"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="@id/price_all"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

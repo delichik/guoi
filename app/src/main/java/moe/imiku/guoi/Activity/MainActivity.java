@@ -2,6 +2,7 @@ package moe.imiku.guoi.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity {
                 TextView textView = view.findViewById(R.id.title);
                 textView.setText(config.getTitle());
                 final int fi = i;
-                textView.setOnClickListener(v ->
+                view.setOnClickListener(v ->
                         ((ViewPager)MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi));
                 add(view);
             }
@@ -77,5 +78,12 @@ public class MainActivity extends Activity {
         GridView gridView = super.findViewById(R.id.nav);
         gridView.setNumColumns(configs.size());
         gridView.setAdapter(new MyGridViewAdapter(nav_list));
+
+    }
+
+    public void toDetail(String id) {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }
