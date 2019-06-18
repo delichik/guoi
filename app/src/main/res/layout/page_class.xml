@@ -24,7 +24,9 @@
             android:id="@+id/header_field"
             android:orientation="vertical"
             android:layout_width="100dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:divider="@drawable/spacer_medium"
+            android:showDividers="middle">
         </RadioGroup>
 
         <ScrollView
