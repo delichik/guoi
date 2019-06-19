@@ -39,7 +39,8 @@
         app:layout_constraintGuide_begin="250dp"/>
 
     <LinearLayout
-        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,15 +48,44 @@
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:textSize="24sp"
-            android:text="当前余额："
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="24sp"
+                android:text="当前余额："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/money"
+                android:textSize="24sp"
+                android:text="1000元"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/give_me_money"
+            android:textSize="26sp"
+            android:text="血统测验"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/my_home_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:textSize="24sp"
-            android:text="1000元"
+            android:layout_marginTop="5dp"
+            android:text="只需50元，以小博大，乐趣无穷"
+            android:textSize="12sp"
+            android:textColor="@color/text_grey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="6dp">
+
+    <TextView
+        android:textColor="@color/text_dark"
+        android:textSize="18sp"
+        android:id="@+id/message"
+        android:text="呜呜呜呜呜呜呜呜无无无无无无无无无"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="14sp"
+        android:text="2019年6月19日14:00:02"
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
@@ -21,6 +22,8 @@ import moe.imiku.guoi.Model.PageConfig;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
 import moe.imiku.guoi.Util.DebugUtil;
+
+import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
 
 public class MainActivity extends Activity {
 
@@ -66,6 +69,8 @@ public class MainActivity extends Activity {
                 View view = View.inflate(MainActivity.this, R.layout.item_nav, null);
                 TextView textView = view.findViewById(R.id.title);
                 textView.setText(config.getTitle());
+                ImageView image = view.findViewById(R.id.image);
+                image.setImageBitmap(getBitmapFromAsset(getAssets(), config.getIcon()));
                 final int fi = i;
                 view.setOnClickListener(v ->
                         ((ViewPager)MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi));
@@ -78,7 +83,6 @@ public class MainActivity extends Activity {
         GridView gridView = super.findViewById(R.id.nav);
         gridView.setNumColumns(configs.size());
         gridView.setAdapter(new MyGridViewAdapter(nav_list));
-
     }
 
     public void toDetail(String id) {
