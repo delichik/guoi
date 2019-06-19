@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="200dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"/>
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/image5"
+                android:layout_weight="0.4"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/image6"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"/>
+
+            <ImageView
+                android:id="@+id/image7"
+                android:layout_weight="0.6"
+                android:layout_width="0dp"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:weightSum="3">
+
+            <View
+                android:background="@color/background_nav"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="5px"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="你在想屁吃"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:background="@color/background_nav"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="5px"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

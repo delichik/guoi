@@ -4,8 +4,8 @@ import moe.imiku.guoi.listener.GlobalValueChangedListener;
 
 public class CurrentUser {
     private static GlobalValueChangedListener listener = null;
-    private static String name;
-    private static String head_img;
+    private static String name = "主角";
+    private static String head_img = "icon/unknown.png";
     private static double money = 1000;
 
     public static String getName() {

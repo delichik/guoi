@@ -2,6 +2,7 @@ package moe.imiku.guoi.Page;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -10,6 +11,8 @@ import moe.imiku.guoi.CurrentUser;
 import moe.imiku.guoi.MessageTable;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
+
+import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
 
 public class MyHome extends PageLoader {
 
@@ -38,7 +41,9 @@ public class MyHome extends PageLoader {
             MessageTable.sendMessage(context, msg);
         });
 
-        ((TextView) findViewById(R.id.money)).setText(CurrentUser.getName());
+        ((TextView) findViewById(R.id.money)).setText(String.format("%.2f元", CurrentUser.getMoney()));
+        ((TextView) findViewById(R.id.user_name)).setText(CurrentUser.getName());
+        ((ImageView) findViewById(R.id.user_head)).setImageBitmap(getBitmapFromAsset(context.getAssets(), CurrentUser.getHead_img()));
         CurrentUser.setListener((obj) ->
                 ((TextView) findViewById(R.id.money))
                         .setText(String.format("%.2f元", CurrentUser.getMoney())));
