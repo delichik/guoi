@@ -3,6 +3,7 @@ package moe.imiku.guoi.Page;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -44,8 +45,9 @@ public class Classification extends PageLoader {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             params.width = dip2px(100);
-            params.height = dip2px(40);
-            _filed.setPadding(10, 0, 0, 0);
+            params.height = dip2px(50);
+            _filed.setTextSize(16);
+            _filed.setGravity(Gravity.CENTER);
             _filed.setLayoutParams(params);
             header_field.addView(_filed);
         }
@@ -59,7 +61,7 @@ public class Classification extends PageLoader {
         for (Fruit fruit : fruitProvider.getFruitsByClass(class_name)) {
             View view = View.inflate(context, R.layout.item_class, null);
             ((TextView)view.findViewById(R.id.name)).setText(fruit.getName());
-            ((TextView)view.findViewById(R.id.price)).setText(String.valueOf(fruit.getPrice()));
+            ((TextView)view.findViewById(R.id.price)).setText(String.format("￥%.2g/kg", fruit.getPrice()));
             ((TextView)view.findViewById(R.id.id)).setText(fruit.getId());
             view.setOnClickListener(v -> {
                 String id = ((TextView)view.findViewById(R.id.id)).getText().toString();

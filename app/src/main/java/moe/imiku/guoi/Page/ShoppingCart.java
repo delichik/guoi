@@ -12,36 +12,55 @@ import java.util.ArrayList;
 import moe.imiku.guoi.Model.CartItem;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
+import moe.imiku.guoi.ShoppingCartTable;
 
-import static moe.imiku.guoi.ShoppingCartTable.getCart;
-import static moe.imiku.guoi.ShoppingCartTable.getCartSize;
-import static moe.imiku.guoi.ShoppingCartTable.removeCart;
 import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
 
 public class ShoppingCart extends PageLoader {
-    ArrayList<View> view_list;
+    private ArrayList<View> view_list;
 
     protected ShoppingCart(Context context) {
         super(context, R.layout.page_shoppign_card);
     }
 
-    @SuppressLint("DefaultLocale")
     @Override
     protected PageLoader subLoad() {
+        refreshView();
+        ShoppingCartTable.setListener((obj) -> refreshView());
+        return this;
+    }
+
+    @Override
+    protected PageLoader subUnLoad() {
+        return this;
+    }
+
+    @SuppressLint("DefaultLocale")
+    private void refreshView () {
+        if (ShoppingCartTable.getCartSize() == 0) {
+            View v = findViewById(R.id.cover);
+            v.setVisibility(View.VISIBLE);
+            v.setOnTouchListener((v1, event) -> false);
+            v.setOnClickListener(v12 -> {});
+            return;
+        }
+        else {
+            View v = findViewById(R.id.cover);
+            v.setVisibility(View.GONE);
+            v.setOnTouchListener(null);
+            v.setOnClickListener(null);
+        }
+
+        ShoppingCartTable.removeEmpty();
         view_list = new ArrayList<>();
         LinearLayout cart_field = findViewById(R.id.cart_field);
-        refreshPrice();
-        for (int i = 0; i < getCartSize(); i++) {
-            final CartItem item = getCart(i);
-            if (item.getCount() <= 0) {
-                removeCart(i--);
-                continue;
-            }
+        for (int i = 0; i < ShoppingCartTable.getCartSize(); i++) {
+            final CartItem item = ShoppingCartTable.getCart(i);
             View view = View.inflate(context, R.layout.item_shopping_cart, null);
             TextView text = view.findViewById(R.id.name);
             text.setText(item.getFruit().getName());
             text = view.findViewById(R.id.price);
-            text.setText(String.format("%.2g元/Kg", item.getFruit().getPrice()));
+            text.setText(String.format("￥%.2f/kg", item.getFruit().getPrice()));
             text = view.findViewById(R.id.count);
             text.setText(String.valueOf(item.getCount()));
             view.findViewById(R.id.min).setOnClickListener(v -> {
@@ -62,13 +81,6 @@ public class ShoppingCart extends PageLoader {
             cart_field.addView(view);
         }
         refreshPrice();
-
-        return this;
-    }
-
-    @Override
-    protected PageLoader subUnLoad() {
-        return this;
     }
 
     @SuppressLint("DefaultLocale")
@@ -77,9 +89,9 @@ public class ShoppingCart extends PageLoader {
         for (int i = 0; i < view_list.size(); i++) {
             View view = view_list.get(i);
             ((TextView) view.findViewById(R.id.count))
-                    .setText(String.valueOf(getCart(i).getCount()));
-            totalPrice += getCart(i).getTotalPrice();
+                    .setText(String.valueOf(ShoppingCartTable.getCart(i).getCount()));
+            totalPrice += ShoppingCartTable.getCart(i).getTotalPrice();
         }
-        ((TextView)findViewById(R.id.price_all)).setText(String.format("总价：%.2g元", totalPrice));
+        ((TextView)findViewById(R.id.price_all)).setText(String.format("总价：%.2f元", totalPrice));
     }
 }

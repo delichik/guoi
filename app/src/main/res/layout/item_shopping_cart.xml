@@ -41,7 +41,7 @@
         android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_dark"
+        android:textColor="@color/colorAccent"
         android:text="10.5元"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline2"

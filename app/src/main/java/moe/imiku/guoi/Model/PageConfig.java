@@ -3,7 +3,7 @@ package moe.imiku.guoi.Model;
 public class PageConfig {
     String class_name;
     String title;
-    String icon = "icons/unknown.png";
+    String icon = "icon/unknown.png";
 
     public String getClass_name() {
         return class_name;
@@ -26,6 +26,7 @@ public class PageConfig {
     }
 
     public void setIcon(String icon) {
+        icon = icon.replaceAll("[\n \r]", "");
         this.icon = icon;
     }
 }
