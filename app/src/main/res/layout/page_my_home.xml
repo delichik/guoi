@@ -77,6 +77,7 @@
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
             android:layout_marginTop="20dp"
+            android:textColor="@color/text_light"
             android:background="@drawable/my_home_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

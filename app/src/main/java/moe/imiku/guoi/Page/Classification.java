@@ -61,11 +61,11 @@ public class Classification extends PageLoader {
         for (Fruit fruit : fruitProvider.getFruitsByClass(class_name)) {
             View view = View.inflate(context, R.layout.item_class, null);
             ((TextView)view.findViewById(R.id.name)).setText(fruit.getName());
-            ((TextView)view.findViewById(R.id.price)).setText(String.format("￥%.2g/kg", fruit.getPrice()));
+            ((TextView)view.findViewById(R.id.price)).setText(String.format("￥%.2f/kg", fruit.getPrice()));
             ((TextView)view.findViewById(R.id.id)).setText(fruit.getId());
             view.setOnClickListener(v -> {
                 String id = ((TextView)view.findViewById(R.id.id)).getText().toString();
-                ((MainActivity)context).toDetail(id);
+                ((MainActivity)context).toDetail(fruitProvider.getFruitById(id));
             });
             ImageView image = view.findViewById(R.id.image);
             image.setImageBitmap(getBitmapFromAsset(context.getAssets(), fruit.getImage()));
