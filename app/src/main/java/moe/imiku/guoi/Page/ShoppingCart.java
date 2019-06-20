@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import moe.imiku.guoi.MessageTable;
 import moe.imiku.guoi.Model.CartItem;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
@@ -37,23 +38,28 @@ public class ShoppingCart extends PageLoader {
 
     @SuppressLint("DefaultLocale")
     private void refreshView () {
+
         if (ShoppingCartTable.getCartSize() == 0) {
             View v = findViewById(R.id.cover);
             v.setVisibility(View.VISIBLE);
-            v.setOnTouchListener((v1, event) -> false);
-            v.setOnClickListener(v12 -> {});
+            findViewById(R.id.pay).setOnClickListener(v13 -> {});
             return;
         }
         else {
             View v = findViewById(R.id.cover);
             v.setVisibility(View.GONE);
-            v.setOnTouchListener(null);
-            v.setOnClickListener(null);
+            findViewById(R.id.pay).setOnClickListener(v13 -> {
+                if (ShoppingCartTable.payAll())
+                    MessageTable.sendMessage(context, "支付成功");
+                else
+                    MessageTable.sendMessage(context, "支付失败，余额不足");
+            });
         }
 
         ShoppingCartTable.removeEmpty();
         view_list = new ArrayList<>();
         LinearLayout cart_field = findViewById(R.id.cart_field);
+        cart_field.removeAllViews();
         for (int i = 0; i < ShoppingCartTable.getCartSize(); i++) {
             final CartItem item = ShoppingCartTable.getCart(i);
             View view = View.inflate(context, R.layout.item_shopping_cart, null);
@@ -80,6 +86,7 @@ public class ShoppingCart extends PageLoader {
             view_list.add(view);
             cart_field.addView(view);
         }
+
         refreshPrice();
     }
 

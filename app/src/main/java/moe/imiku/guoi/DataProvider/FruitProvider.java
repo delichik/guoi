@@ -45,7 +45,7 @@ public class FruitProvider {
                     Fruit fruit = new Fruit();
                     fruit.setId(item.attr("id"));
                     fruit.setName(item.attr("name"));
-                    fruit.setPrice(Double.parseDouble(item.attr("price")));
+                    fruit.setPrice(DoubleUtil.getDouble(item.attr("price")));
                     fruit.setImage(item.attr("image"));
                     fruits.add(fruit);
                 }

@@ -1,10 +1,34 @@
 package moe.imiku.guoi.Model;
 
-public class Fruit {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Fruit implements Parcelable {
     private String id;
     private String name;
     private double price;
     private String image = "image/default.jpg";
+
+    public Fruit () {}
+
+    protected Fruit(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        price = in.readDouble();
+        image = in.readString();
+    }
+
+    public static final Creator<Fruit> CREATOR = new Creator<Fruit>() {
+        @Override
+        public Fruit createFromParcel(Parcel in) {
+            return new Fruit(in);
+        }
+
+        @Override
+        public Fruit[] newArray(int size) {
+            return new Fruit[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -38,5 +62,17 @@ public class Fruit {
         if (image.equals(""))
             return;
         this.image = image;
+    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeDouble(price);
+        dest.writeString(image);
     }
 }

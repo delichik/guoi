@@ -12,7 +12,7 @@ public class ShoppingCartTable {
     private static ArrayList<CartItem> cart_list = new ArrayList<>();
 
     public static void addNewToCart (CartItem item) {
-        cart_list.add(item);
+        cart_list.add(item.clone());
         sendChangedMessage();
     }
 
@@ -22,7 +22,11 @@ public class ShoppingCartTable {
     }
 
     public static void addToCart (int index) {
-        cart_list.get(index).setCount(cart_list.get(index).getCount() + 1);
+		addToCart(index, 1);
+    }
+	
+	public static void addToCart (int index, int count) {
+        cart_list.get(index).setCount(cart_list.get(index).getCount() + count);
         sendChangedMessage();
     }
 
@@ -61,5 +65,18 @@ public class ShoppingCartTable {
             if (item.getCount() == 0)
                 cart_list.remove(item);
         }
+    }
+
+    public static boolean payAll() {
+        double totalPrice = 0;
+        for (int i = 0; i < cart_list.size(); i++) {
+            totalPrice += ShoppingCartTable.getCart(i).getTotalPrice();
+        }
+        boolean r = CurrentUser.pay(totalPrice);
+        if (r) {
+            cart_list.clear();
+            sendChangedMessage();
+        }
+        return r;
     }
 }

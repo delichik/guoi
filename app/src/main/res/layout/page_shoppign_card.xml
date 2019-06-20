@@ -69,7 +69,7 @@
         <TextView
             android:textSize="18sp"
             android:gravity="center"
-            android:background="@color/background_accept"
+            android:background="@color/colorAccent"
             android:textColor="@color/text_light"
             android:id="@+id/pay"
             android:layout_width="0dp"

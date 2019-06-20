@@ -15,66 +15,76 @@
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="50dp" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/image_field"
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="50dp" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                tools:srcCompat="@tools:sample/backgrounds/scenic"
-                android:scaleType="centerCrop"/>
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="北京平谷早露蟠桃"
-                android:textSize="30sp"
-                android:padding="10sp"/>
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10sp">
-
-                <TextView
-                    android:textSize="24sp"
-                    android:text="单价：￥"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/money"
-                    android:textSize="24sp"
-                    android:text="59.0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <TextView
-                android:gravity="center"
+                android:id="@+id/image_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="宝贝介绍"
-                />
-        </LinearLayout>
-    </ScrollView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="北京平谷早露蟠桃"
+                    android:textSize="24sp"
+                    android:padding="10dp"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="12dp"
+                        android:textSize="16sp"
+                        android:text="单价："
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="@color/colorAccent"
+                        android:id="@+id/money"
+                        android:textSize="16sp"
+                        android:text="59.0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_margin="12dp"
+                    android:text="宝贝介绍" />
+            </LinearLayout>
+
+        </ScrollView>
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
@@ -85,22 +95,24 @@
         <TextView
             android:background="@color/background_front"
             android:gravity="center_vertical"
-            android:paddingStart="20dp"
+            android:paddingStart="12dp"
             android:id="@+id/price_all"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:textSize="20sp"
-            android:text="总价：￥"
+            android:text="总价："
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintGuide_end="330dp"
+            app:layout_constraintGuide_begin="70dp"
             android:orientation="vertical" />
+
         <TextView
             android:layout_marginStart="8dp"
             android:id="@+id/price"
@@ -108,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:textColor="@color/colorAccent"
-            android:text="10.5元"
+            android:text="10000.05元"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline5"
@@ -123,9 +135,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="25dp"
             android:gravity="center_vertical"
-            android:layout_alignParentRight="true"
             android:background="@drawable/cart_num_style"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -192,5 +203,6 @@
             app:layout_constraintStart_toEndOf="@id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/guideline" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </LinearLayout>
 

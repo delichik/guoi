@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import moe.imiku.guoi.Adaptar.MyGridViewAdapter;
 import moe.imiku.guoi.Adaptar.MyViewPagerAdapter;
 import moe.imiku.guoi.DataProvider.PageConfigProvider;
+import moe.imiku.guoi.Model.Fruit;
 import moe.imiku.guoi.Model.PageConfig;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
@@ -26,6 +27,9 @@ import moe.imiku.guoi.Util.DebugUtil;
 import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
 
 public class MainActivity extends Activity {
+
+    private int current_position = 0;
+    private ArrayList<View> nav_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,7 @@ public class MainActivity extends Activity {
             }
         }};
 
-        ArrayList<View> nav_list = new ArrayList<View>() {{
+        nav_list = new ArrayList<View>() {{
             for (int i = 0; i < configs.size(); i++){
                 PageConfig config = configs.get(i);
 
@@ -72,8 +76,14 @@ public class MainActivity extends Activity {
                 ImageView image = view.findViewById(R.id.image);
                 image.setImageBitmap(getBitmapFromAsset(getAssets(), config.getIcon()));
                 final int fi = i;
-                view.setOnClickListener(v ->
-                        ((ViewPager)MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi));
+                view.setOnClickListener(v -> {
+                    for (int t = 0; t < nav_list.size(); t++)
+                        nav_list.get(t).setBackgroundColor(getResources().getColor(R.color.background_nav));
+                    current_position = fi;
+                    nav_list.get(fi).setBackgroundColor(getResources().getColor(R.color.background_nav_dark));
+                    ((ViewPager)MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi);
+                });
+                if (i == 0) view.setBackgroundColor(getResources().getColor(R.color.background_nav_dark));
                 add(view);
             }
         }};
@@ -85,9 +95,9 @@ public class MainActivity extends Activity {
         gridView.setAdapter(new MyGridViewAdapter(nav_list));
     }
 
-    public void toDetail(String id) {
+    public void toDetail(Fruit fruit) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-        intent.putExtra("id", id);
+        intent.putExtra("fruit", fruit);
         startActivity(intent);
     }
 }
