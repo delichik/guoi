@@ -1,8 +1,11 @@
 package moe.imiku.guoi.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,6 +15,9 @@ import androidx.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import moe.imiku.guoi.MessageTable;
 import moe.imiku.guoi.Model.CartItem;
 import moe.imiku.guoi.Model.Fruit;
@@ -21,6 +27,20 @@ import moe.imiku.guoi.ShoppingCartTable;
 import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
 
 public class DetailActivity extends Activity {
+
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.name)
+    TextView name;
+    @BindView(R.id.money)
+    TextView money;
+    @BindView(R.id.image_field)
+    LinearLayout imageField;
+    @BindView(R.id.price)
+    TextView price;
+    @BindView(R.id.count)
+    Button count;
+
     private Fruit fruit;
     private String[] images;
     private CartItem item;
@@ -29,78 +49,35 @@ public class DetailActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        ButterKnife.bind(this);
 
         fruit = getIntent().getParcelableExtra("fruit");
         initImages();
         init();
     }
 
-    public void init () {
+    public void init() {
         item = new CartItem();
         item.setCount(1);
         item.setFruit(fruit);
 
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageBitmap(getBitmapFromAsset(getAssets(),fruit.getImage()));
-        TextView textView_name = findViewById(R.id.name);
-        textView_name.setText(fruit.getName());
-        TextView textView_money = findViewById(R.id.money);
-        textView_money.setText(String.format("￥%.2f",fruit.getPrice()));
-        LinearLayout linearLayout = findViewById(R.id.image_field);
-        TextView textView_price = findViewById(R.id.price);
-        textView_price.setText(String.format("￥%.2f",item.getTotalPrice()));
-        TextView textView_count = findViewById(R.id.count);
+        imageView.setImageBitmap(getBitmapFromAsset(getAssets(), fruit.getImage()));
+        name.setText(fruit.getName());
+        money.setText(String.format("￥%.2f", fruit.getPrice()));
+        price.setText(String.format("￥%.2f", item.getTotalPrice()));
 
-        for (String image : images){
+        for (String image : images) {
             ImageView imageView1 = new ImageView(this);
-            imageView1.setImageBitmap(getBitmapFromAsset(getAssets(),image));
-            linearLayout.addView(imageView1);
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView1.getLayoutParams();
-            params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            params.width = LinearLayout.LayoutParams.MATCH_PARENT;
-            imageView1.setLayoutParams(params);
+            imageView1.setImageBitmap(getBitmapFromAsset(getAssets(), image));
+            imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView1.setAdjustViewBounds(true);
+            imageField.addView(imageView1);
         }
 
-        findViewById(R.id.min).setOnClickListener(v -> {
-            if (item.getCount() <= 0)
-                return;
-            item.setCount(item.getCount() - 1);
-            textView_price.setText(String.format("￥%.2f",item.getTotalPrice()));
-            textView_count.setText(item.getCount() + "");
-        });
-
-        findViewById(R.id.add).setOnClickListener(v -> {
-            if (item.getCount() >= 99)
-                return;
-            item.setCount(item.getCount() + 1);
-
-            textView_price.setText(String.format("￥%.2f",item.getTotalPrice()));
-            textView_count.setText(item.getCount() + "");
-        });
-
-        findViewById(R.id.addcar).setOnClickListener(v -> {
-            for (int i = 0;i < ShoppingCartTable.getCartSize();i++){
-                if (ShoppingCartTable.getCart(i).getFruit().getId().equals(fruit.getId())) {
-                    ShoppingCartTable.addToCart(i, item.getCount());
-                    MessageTable.sendMessage(DetailActivity.this,
-                            item.getFruit().getName()
-                                    + " x "
-                                    + item.getCount()
-                                    + "已添加到购物车");
-                    return;
-                }
-            }
-            ShoppingCartTable.addNewToCart(item);
-            MessageTable.sendMessage(DetailActivity.this,
-                    item.getFruit().getName()
-                            + " x "
-                            + item.getCount()
-                            + "已添加到购物车");
-        });
     }
 
 
-    public void initImages () {
+    public void initImages() {
         AssetManager am = getAssets();
         ArrayList<String> list = new ArrayList<>();
         String base = fruit.getImage();
@@ -110,10 +87,59 @@ public class DetailActivity extends Activity {
                 am.open(t);
                 list.add(t);
             } catch (IOException e) {
-                e.printStackTrace();
                 break;
             }
         }
         images = list.toArray(new String[]{});
+    }
+
+    @OnClick({R.id.back, R.id.to_cart, R.id.addcar, R.id.add, R.id.min})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.to_cart:
+                Intent intent = new Intent();
+                intent.putExtra("toCart", true);
+                setResult(23333, intent);
+                finish();
+                break;
+            case R.id.add:
+                if (item.getCount() >= 99)
+                    return;
+                item.setCount(item.getCount() + 1);
+                price.setText(String.format("￥%.2f", item.getTotalPrice()));
+                count.setText(item.getCount() + "");
+                break;
+            case R.id.min:
+                if (item.getCount() <= 0)
+                    return;
+                item.setCount(item.getCount() - 1);
+                price.setText(String.format("￥%.2f", item.getTotalPrice()));
+                count.setText(item.getCount() + "");
+                break;
+            case R.id.addcar:
+                if (item.getCount() <= 0)
+                    break;
+                for (int i = 0; i < ShoppingCartTable.getCartSize(); i++) {
+                    if (ShoppingCartTable.getCart(i).getFruit().getId().equals(fruit.getId())) {
+                        ShoppingCartTable.addToCart(i, item.getCount());
+                        MessageTable.sendMessage(DetailActivity.this,
+                                item.getFruit().getName()
+                                        + " x "
+                                        + item.getCount()
+                                        + "已添加到购物车");
+                        return;
+                    }
+                }
+                ShoppingCartTable.addNewToCart(item);
+                MessageTable.sendMessage(DetailActivity.this,
+                        item.getFruit().getName()
+                                + " x "
+                                + item.getCount()
+                                + "已添加到购物车");
+                break;
+        }
     }
 }
