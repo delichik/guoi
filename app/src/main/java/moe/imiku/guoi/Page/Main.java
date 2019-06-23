@@ -11,8 +11,6 @@ import moe.imiku.guoi.Model.Fruit;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
 
-import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
-
 public class Main extends PageLoader {
     protected Main(Context context) {
         super(context, R.layout.page_main);
@@ -24,14 +22,16 @@ public class Main extends PageLoader {
 
     @Override
     protected PageLoader subLoad() {
-        provider = new FruitProvider(context.getAssets());
-        setImage(R.id.image1, fruit_ids[0]);
-        setImage(R.id.image2, fruit_ids[1]);
-        setImage(R.id.image3, fruit_ids[2]);
-        setImage(R.id.image4, fruit_ids[3]);
-        setImage(R.id.image5, fruit_ids[4]);
-        setImage(R.id.image6, fruit_ids[5]);
-        setImage(R.id.image7, fruit_ids[6]);
+        provider = new FruitProvider();
+        new Thread(() -> {
+            setImage(R.id.image1, fruit_ids[0]);
+            setImage(R.id.image2, fruit_ids[1]);
+            setImage(R.id.image3, fruit_ids[2]);
+            setImage(R.id.image4, fruit_ids[3]);
+            setImage(R.id.image5, fruit_ids[4]);
+            setImage(R.id.image6, fruit_ids[5]);
+            setImage(R.id.image7, fruit_ids[6]);
+        }).start();
         return this;
     }
 
@@ -39,7 +39,7 @@ public class Main extends PageLoader {
         ImageView imageView = findViewById(imageView_id);
         Fruit fruit = provider.getFruitById(fid);
         String image = getInfoImage(fruit);
-        imageView.setImageBitmap(getBitmapFromAsset(context.getAssets(), image));
+        loadURLBitmap(image, imageView);
         imageView.setOnClickListener((v) -> ((MainActivity)context).toDetail(fruit));
     }
 

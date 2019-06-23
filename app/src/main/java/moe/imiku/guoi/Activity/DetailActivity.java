@@ -2,9 +2,13 @@ package moe.imiku.guoi.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,19 +16,18 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import moe.imiku.guoi.MessageTable;
+import moe.imiku.guoi.Config;
 import moe.imiku.guoi.Model.CartItem;
 import moe.imiku.guoi.Model.Fruit;
+import moe.imiku.guoi.Model.ImageViewLoaderItem;
 import moe.imiku.guoi.R;
 import moe.imiku.guoi.ShoppingCartTable;
+import moe.imiku.guoi.Util.ThreadPool;
 
-import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
+import static moe.imiku.guoi.Util.NetResourceUtil.getURLimage;
 
 public class DetailActivity extends Activity {
 
@@ -42,14 +45,27 @@ public class DetailActivity extends Activity {
     Button count;
 
     private Fruit fruit;
-    private String[] images;
     private CartItem item;
+    private ThreadPool threadPool;
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    ((ImageViewLoaderItem)msg.obj)
+                            .getImageView()
+                            .setImageBitmap(((ImageViewLoaderItem)msg.obj).getBitmap());
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+
+        threadPool = new ThreadPool(Config.THREAD_COUNT_FAST);
 
         fruit = getIntent().getParcelableExtra("fruit");
         initImages();
@@ -60,37 +76,56 @@ public class DetailActivity extends Activity {
         item = new CartItem();
         item.setCount(1);
         item.setFruit(fruit);
-
-        imageView.setImageBitmap(getBitmapFromAsset(getAssets(), fruit.getImage()));
+        threadPool.addNewThread(() -> {
+            Bitmap bitmap = getURLimage(fruit.getImage());
+            Message msg = new Message();
+            msg.what = 0;
+            msg.obj = new ImageViewLoaderItem();
+            ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
+            ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
+            handler.sendMessage(msg);
+        });
         name.setText(fruit.getName());
         money.setText(String.format("￥%.2f", fruit.getPrice()));
         price.setText(String.format("￥%.2f", item.getTotalPrice()));
-
-        for (String image : images) {
-            ImageView imageView1 = new ImageView(this);
-            imageView1.setImageBitmap(getBitmapFromAsset(getAssets(), image));
-            imageView1.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView1.setAdjustViewBounds(true);
-            imageField.addView(imageView1);
-        }
-
     }
 
 
+    boolean stop = false;
     public void initImages() {
-        AssetManager am = getAssets();
-        ArrayList<String> list = new ArrayList<>();
-        String base = fruit.getImage();
-        for (int i = 1; true; i++) {
-            try {
+        stop = false;
+        new Thread(() -> {
+            String base = fruit.getImage();
+            for (int i = 1; !stop; i++) {
                 String t = base.replaceAll("_p[0-9].jpg", "_p" + i + ".jpg");
-                am.open(t);
-                list.add(t);
-            } catch (IOException e) {
-                break;
+                threadPool.addNewThread(() -> {
+                    Bitmap bitmap = getURLimage(t);
+                    if (bitmap == null) {
+                        stop = true;
+                        return;
+                    }
+
+                    ImageView imageView = new ImageView(this);
+                    Message msg = new Message();
+                    msg.what = 0;
+                    msg.obj = new ImageViewLoaderItem();
+                    ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
+                    ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
+                    handler.sendMessage(msg);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setAdjustViewBounds(true);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+                    handler.post(() -> imageField.addView(imageView, params));
+                });
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        images = list.toArray(new String[]{});
+        }).start();
     }
 
     @OnClick({R.id.back, R.id.to_cart, R.id.addcar, R.id.add, R.id.min})
@@ -122,23 +157,7 @@ public class DetailActivity extends Activity {
             case R.id.addcar:
                 if (item.getCount() <= 0)
                     break;
-                for (int i = 0; i < ShoppingCartTable.getCartSize(); i++) {
-                    if (ShoppingCartTable.getCart(i).getFruit().getId().equals(fruit.getId())) {
-                        ShoppingCartTable.addToCart(i, item.getCount());
-                        MessageTable.sendMessage(DetailActivity.this,
-                                item.getFruit().getName()
-                                        + " x "
-                                        + item.getCount()
-                                        + "已添加到购物车");
-                        return;
-                    }
-                }
-                ShoppingCartTable.addNewToCart(item);
-                MessageTable.sendMessage(DetailActivity.this,
-                        item.getFruit().getName()
-                                + " x "
-                                + item.getCount()
-                                + "已添加到购物车");
+                ShoppingCartTable.addToCart(item, this);
                 break;
         }
     }

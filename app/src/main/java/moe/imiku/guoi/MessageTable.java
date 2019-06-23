@@ -1,6 +1,8 @@
 package moe.imiku.guoi;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -13,6 +15,8 @@ public class MessageTable {
 
     private static GlobalValueChangedListener listener = null;
     private static ArrayList<Message> message_list = new ArrayList<>();
+    private static Toast toast = null;
+    private static Handler handler = new Handler(Looper.getMainLooper());
 
     public static void sendMessage (Context context, String msg) {
         Message message = new Message();
@@ -21,8 +25,14 @@ public class MessageTable {
         Date curDate =  new Date(System.currentTimeMillis());
         message.setTime(formatter.format(curDate));
         message_list.add(message);
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-        if (listener != null) listener.onChanged(message);
+        handler.post(() -> {
+            if (toast != null)
+                toast.cancel();
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+            toast.show();
+
+            if (listener != null) listener.onChanged(message);
+        });
     }
 
     public static Message[] getAllMessages () {

@@ -15,8 +15,6 @@ import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
 import moe.imiku.guoi.ShoppingCartTable;
 
-import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
-
 public class ShoppingCart extends PageLoader {
     private ArrayList<View> view_list;
 
@@ -86,7 +84,8 @@ public class ShoppingCart extends PageLoader {
                     refreshPrice();
                 });
                 ImageView image = view.findViewById(R.id.image);
-                image.setImageBitmap(getBitmapFromAsset(context.getAssets(), item.getFruit().getImage()));
+                loadURLBitmap(item.getFruit().getImage(), image);
+//                image.setImageBitmap(getBitmapFromAsset(context.getAssets(), item.getFruit().getImage()));
                 view_list.add(view);
                 runInMainThread(() -> cart_field.addView(view));
             }

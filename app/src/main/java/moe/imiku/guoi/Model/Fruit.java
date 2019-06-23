@@ -3,6 +3,8 @@ package moe.imiku.guoi.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import moe.imiku.guoi.Config;
+
 public class Fruit implements Parcelable {
     private String id;
     private String name;
@@ -55,7 +57,7 @@ public class Fruit implements Parcelable {
     }
 
     public String getImage() {
-        return image;
+        return Config.BASE_URL + image;
     }
 
     public void setImage(String image) {
