@@ -1,30 +1,32 @@
 package moe.imiku.guoi.DataProvider;
 
-import android.content.res.AssetManager;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import moe.imiku.guoi.Config;
 import moe.imiku.guoi.Model.Fruit;
 import moe.imiku.guoi.Util.DoubleUtil;
 
-import static moe.imiku.guoi.Util.FileUtil.getTextFromAssets;
-
 public class FruitProvider {
 
-    private AssetManager am;
     private Document doc;
 
-    public FruitProvider(AssetManager am){
-        this.am = am;
-        this.doc = Jsoup.parse(getTextFromAssets(am,"classification_header.xml"));
-    }
-
     public ArrayList<String> getClasses(){
+        if (doc == null)
+        try {
+            doc = Jsoup.connect(Config.BASE_URL + "classification_header.xml")
+            .get();
+        } catch (IOException e) {
+            e.printStackTrace();
+            doc = null;
+            return null;
+        }
+
         Element root = doc.getElementsByTag("root").get(0);
         Elements classes = root.getElementsByTag("class");
         ArrayList<String> frclass = new ArrayList<>();
@@ -55,6 +57,16 @@ public class FruitProvider {
     }
 
     public Fruit getFruitById (String id){
+        if (doc == null)
+            try {
+                doc = Jsoup.connect(Config.BASE_URL + "classification_header.xml")
+                        .get();
+            } catch (IOException e) {
+                e.printStackTrace();
+                doc = null;
+                return null;
+            }
+
         Element root = doc.getElementsByTag("root").get(0);
         Elements classes = root.getElementsByAttributeValue("id",id);
         Fruit fruit = new Fruit();

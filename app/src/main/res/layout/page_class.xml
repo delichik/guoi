@@ -24,27 +24,39 @@
             android:id="@+id/header_field"
             android:orientation="vertical"
             android:layout_width="100dp"
+            android:overScrollMode="never"
             android:layout_height="match_parent"
             android:divider="@drawable/spacer_medium"
             android:showDividers="middle">
         </RadioGroup>
 
-        <ScrollView
-            android:background="@color/background_front"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fruit_field"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/fruit_field"
-                android:divider="@drawable/spacer_medium"
-                android:showDividers="middle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            </LinearLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+
+        <!--<ScrollView-->
+            <!--android:background="@color/background_front"-->
+            <!--android:overScrollMode="never"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:id="@+id/fruit_field"-->
+                <!--android:divider="@drawable/spacer_medium"-->
+                <!--android:showDividers="middle"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+            <!--</LinearLayout>-->
+
+        <!--</ScrollView>-->
 
     </LinearLayout>
 

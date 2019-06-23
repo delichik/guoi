@@ -37,12 +37,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_marginStart="8dp"
         android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
+        android:layout_marginStart="8dp"
         android:text="10.5元"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@id/guideline1"
@@ -74,7 +74,7 @@
             android:layout_width="26dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="2dp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/cart_button"
             android:gravity="center"
             android:text="-" />
 
@@ -102,7 +102,7 @@
             android:layout_width="26dp"
             android:layout_height="match_parent"
             android:layout_marginRight="2dp"
-            android:background="@android:color/transparent"
+            android:background="@drawable/cart_button"
             android:gravity="center"
             android:text="+" />
     </LinearLayout>

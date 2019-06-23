@@ -4,73 +4,78 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
-import moe.imiku.guoi.Activity.MainActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import moe.imiku.guoi.Adaptar.ClassRecycleAdapter;
 import moe.imiku.guoi.DataProvider.FruitProvider;
-import moe.imiku.guoi.Model.Fruit;
 import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
 
-import static moe.imiku.guoi.Util.FileUtil.getBitmapFromAsset;
-
 public class Classification extends PageLoader {
 
+    RadioGroup headerField;
+    RecyclerView fruitField;
     private FruitProvider fruitProvider;
 
     protected Classification(Context context) {
         super(context, R.layout.page_class);
+        fruitField = findViewById(R.id.fruit_field);
+        fruitField.setLayoutManager(new LinearLayoutManager(context));
+        headerField = findViewById(R.id.header_field);
     }
 
     @Override
     protected PageLoader subLoad() {
-        RadioGroup header_field = findViewById(R.id.header_field);
-        header_field.setOnCheckedChangeListener((group, checkedId) -> {
-            String class_name = ((RadioButton)group.findViewById(checkedId)).getText().toString();
+        headerField.setOnCheckedChangeListener((group, checkedId) -> {
+            String class_name = ((RadioButton) group.findViewById(checkedId)).getText().toString();
             refreshList(class_name);
         });
-        fruitProvider = new FruitProvider(context.getAssets());
-        for(String str : fruitProvider.getClasses()){
-            RadioButton _filed = new RadioButton(context);
-            _filed.setText(str);
-            _filed.setBackgroundResource(R.drawable.class_radio_button);
-            _filed.setButtonDrawable(null);
-            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.width = dip2px(100);
-            params.height = dip2px(50);
-            _filed.setTextSize(16);
-            _filed.setGravity(Gravity.CENTER);
-            _filed.setLayoutParams(params);
-            header_field.addView(_filed);
-        }
-        header_field.check(header_field.getChildAt(0).getId());
+
+        new Thread(() -> {
+            fruitProvider = new FruitProvider();
+            for (String str : fruitProvider.getClasses()) {
+                RadioButton button = new RadioButton(context);
+                button.setText(str);
+                button.setBackgroundResource(R.drawable.class_radio_button);
+                button.setButtonDrawable(null);
+                RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.width = dip2px(100);
+                params.height = dip2px(50);
+                button.setTextSize(16);
+                button.setGravity(Gravity.CENTER);
+                button.setLayoutParams(params);
+                runInMainThread(() -> headerField.addView(button));
+            }
+            runInMainThread(() -> headerField.check(headerField.getChildAt(0).getId()));
+        }).start();
         return this;
     }
 
-    private void refreshList (String class_name) {
-        LinearLayout fruit_field = findViewById(R.id.fruit_field);
-        fruit_field.removeAllViews();
-        for (Fruit fruit : fruitProvider.getFruitsByClass(class_name)) {
-            View view = View.inflate(context, R.layout.item_class, null);
-            ((TextView)view.findViewById(R.id.name)).setText(fruit.getName());
-            ((TextView)view.findViewById(R.id.price)).setText(String.format("￥%.2f/kg", fruit.getPrice()));
-            ((TextView)view.findViewById(R.id.id)).setText(fruit.getId());
-            view.setOnClickListener(v -> {
-                String id = ((TextView)view.findViewById(R.id.id)).getText().toString();
-                ((MainActivity)context).toDetail(fruitProvider.getFruitById(id));
-            });
-            ImageView image = view.findViewById(R.id.image);
-            image.setImageBitmap(getBitmapFromAsset(context.getAssets(), fruit.getImage()));
-            fruit_field.addView(view);
-        }
+    private void refreshList(String class_name) {
+        fruitField.setAdapter(new ClassRecycleAdapter(fruitProvider.getFruitsByClass(class_name), context));
+//        fruitField.removeAllViews();
+//        new Thread(() -> {
+//            for (Fruit fruit : fruitProvider.getFruitsByClass(class_name)) {
+//                View view = View.inflate(context, R.layout.item_class, null);
+//                ((TextView) view.findViewById(R.id.name)).setText(fruit.getName());
+//                ((TextView) view.findViewById(R.id.price)).setText(String.format("￥%.2f/kg", fruit.getPrice()));
+//                ((TextView) view.findViewById(R.id.id)).setText(fruit.getId());
+//                view.setOnClickListener(v -> {
+//                    String id = ((TextView) view.findViewById(R.id.id)).getText().toString();
+//                    ((MainActivity) context).toDetail(fruitProvider.getFruitById(id));
+//                });
+//                ImageView image = view.findViewById(R.id.image);
+//                image.setImageBitmap(getBitmapFromAsset(context.getAssets(), fruit.getImage()));
+//                runInMainThread(() -> fruitField.addView(view));
+//            }
+//        }).start();
     }
 
     @Override

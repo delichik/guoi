@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
+    android:paddingBottom="2dp"
+    android:paddingTop="2dp"
     android:layout_width="match_parent"
     android:layout_height="80dp">
 
@@ -10,7 +12,6 @@
         android:id="@+id/image"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_dark"
         android:text="苹果"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline1"
@@ -38,21 +39,37 @@
 
     <TextView
         android:layout_marginStart="8dp"
+        android:textSize="14sp"
         android:id="@+id/price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:text="10.5元"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/name" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="30dp" />
+
     <TextView
+        android:textColor="@color/text_light"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:text="+"
+        android:id="@+id/add"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="gone"
-        android:id="@+id/id"/>
+        android:background="@drawable/main_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
