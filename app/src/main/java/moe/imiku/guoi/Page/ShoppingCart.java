@@ -41,6 +41,7 @@ public class ShoppingCart extends PageLoader {
             View v = findViewById(R.id.cover);
             v.setVisibility(View.VISIBLE);
             findViewById(R.id.pay).setOnClickListener(v13 -> {});
+            findViewById(R.id.clear).setOnClickListener(null);
             return;
         }
         else {
@@ -55,6 +56,9 @@ public class ShoppingCart extends PageLoader {
                         MessageTable.sendMessage(context, "支付失败，余额不足");
                 }
             });
+
+            findViewById(R.id.clear).setOnClickListener(v13 ->
+                    ShoppingCartTable.removeAllCartNoCallback());
         }
 
         ShoppingCartTable.removeEmpty();

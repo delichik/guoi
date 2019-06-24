@@ -2,16 +2,14 @@ package moe.imiku.guoi.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -27,22 +25,22 @@ import moe.imiku.guoi.R;
 import moe.imiku.guoi.ShoppingCartTable;
 import moe.imiku.guoi.Util.ThreadPool;
 
-import static moe.imiku.guoi.Util.NetResourceUtil.getURLimage;
-
 public class DetailActivity extends Activity {
 
-    @BindView(R.id.imageView)
-    ImageView imageView;
-    @BindView(R.id.name)
-    TextView name;
-    @BindView(R.id.money)
-    TextView money;
-    @BindView(R.id.image_field)
-    LinearLayout imageField;
+//    @BindView(R.id.imageView)
+//    ImageView imageView;
+//    @BindView(R.id.name)
+//    TextView name;
+//    @BindView(R.id.money)
+//    TextView money;
+//    @BindView(R.id.image_field)
+//    LinearLayout imageField;
     @BindView(R.id.price)
     TextView price;
     @BindView(R.id.count)
     Button count;
+    @BindView(R.id.webview)
+    WebView webView;
 
     private Fruit fruit;
     private CartItem item;
@@ -68,7 +66,7 @@ public class DetailActivity extends Activity {
         threadPool = new ThreadPool(Config.THREAD_COUNT_FAST);
 
         fruit = getIntent().getParcelableExtra("fruit");
-        initImages();
+//        initImages();
         init();
     }
 
@@ -76,57 +74,68 @@ public class DetailActivity extends Activity {
         item = new CartItem();
         item.setCount(1);
         item.setFruit(fruit);
-        threadPool.addNewThread(() -> {
-            Bitmap bitmap = getURLimage(fruit.getImage());
-            Message msg = new Message();
-            msg.what = 0;
-            msg.obj = new ImageViewLoaderItem();
-            ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
-            ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
-            handler.sendMessage(msg);
-        });
-        name.setText(fruit.getName());
-        money.setText(String.format("￥%.2f", fruit.getPrice()));
+//        threadPool.addNewThread(() -> {
+//            Bitmap bitmap = getURLimage(fruit.getImage());
+//            Message msg = new Message();
+//            msg.what = 0;
+//            msg.obj = new ImageViewLoaderItem();
+//            ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
+//            ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
+//            handler.sendMessage(msg);
+//        });
+//        name.setText(fruit.getName());
+//        money.setText(String.format("￥%.2f", fruit.getPrice()));
         price.setText(String.format("￥%.2f", item.getTotalPrice()));
-    }
 
-
-    boolean stop = false;
-    public void initImages() {
-        stop = false;
-        new Thread(() -> {
-            String base = fruit.getImage();
-            for (int i = 1; !stop; i++) {
-                String t = base.replaceAll("_p[0-9].jpg", "_p" + i + ".jpg");
-                threadPool.addNewThread(() -> {
-                    Bitmap bitmap = getURLimage(t);
-                    if (bitmap == null) {
-                        stop = true;
-                        return;
-                    }
-
-                    ImageView imageView = new ImageView(this);
-                    Message msg = new Message();
-                    msg.what = 0;
-                    msg.obj = new ImageViewLoaderItem();
-                    ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
-                    ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
-                    handler.sendMessage(msg);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    imageView.setAdjustViewBounds(true);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT);
-                    handler.post(() -> imageField.addView(imageView, params));
-                });
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        webView.getSettings().setBuiltInZoomControls(false);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
             }
-        }).start();
+        });
+        webView.loadUrl(Config.BASE_DETAIL_URL + "?id=" + fruit.getId());
     }
+
+
+//    boolean stop = false;
+//    public void initImages() {
+//        stop = false;
+//        new Thread(() -> {
+//            String base = fruit.getImage();
+//            for (int i = 1; !stop; i++) {
+//                String t = base.replaceAll("_p[0-9].jpg", "_p" + i + ".jpg");
+//                threadPool.addNewThread(() -> {
+//                    Bitmap bitmap = getURLimage(t);
+//                    if (bitmap == null) {
+//                        stop = true;
+//                        return;
+//                    }
+//
+//                    ImageView imageView = new ImageView(this);
+//                    Message msg = new Message();
+//                    msg.what = 0;
+//                    msg.obj = new ImageViewLoaderItem();
+//                    ((ImageViewLoaderItem) msg.obj).setBitmap(bitmap);
+//                    ((ImageViewLoaderItem) msg.obj).setImageView(imageView);
+//                    handler.sendMessage(msg);
+//                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//                    imageView.setAdjustViewBounds(true);
+//                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                            ViewGroup.LayoutParams.MATCH_PARENT,
+//                            ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    handler.post(() -> imageField.addView(imageView, params));
+//                });
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+//    }
 
     @OnClick({R.id.back, R.id.to_cart, R.id.addcar, R.id.add, R.id.min})
     public void onViewClicked(View view) {

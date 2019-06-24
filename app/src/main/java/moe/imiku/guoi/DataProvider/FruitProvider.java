@@ -19,7 +19,7 @@ public class FruitProvider {
     public ArrayList<String> getClasses(){
         if (doc == null)
         try {
-            doc = Jsoup.connect(Config.BASE_URL + "classification_header.xml")
+            doc = Jsoup.connect(Config.BASE_INFO_URL + "classification_header.xml")
             .get();
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class FruitProvider {
     public Fruit getFruitById (String id){
         if (doc == null)
             try {
-                doc = Jsoup.connect(Config.BASE_URL + "classification_header.xml")
+                doc = Jsoup.connect(Config.BASE_INFO_URL + "classification_header.xml")
                         .get();
             } catch (IOException e) {
                 e.printStackTrace();

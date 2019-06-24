@@ -46,6 +46,16 @@ public class ShoppingCartTable {
         sendChangedMessage();
     }
 
+
+    public static void removeAllCart () {
+        cart_list.clear();
+        sendChangedMessage();
+    }
+
+    public static void removeAllCartNoCallback () {
+        cart_list.clear();
+    }
+
     public static void minCart (int index) {
         cart_list.get(index).setCount(cart_list.get(index).getCount() - 1);
         sendChangedMessage();
