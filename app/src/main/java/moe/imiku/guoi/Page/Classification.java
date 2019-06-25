@@ -22,7 +22,7 @@ public class Classification extends PageLoader {
     private RecyclerView fruitField;
     private FruitProvider fruitProvider;
 
-    protected Classification(Context context) {
+    public Classification(Context context) {
         super(context, R.layout.page_class);
         fruitField = findViewById(R.id.fruit_field);
         fruitField.setLayoutManager(new LinearLayoutManager(context));

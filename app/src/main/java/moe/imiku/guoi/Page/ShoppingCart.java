@@ -23,7 +23,7 @@ public class ShoppingCart extends PageLoader {
 
     private ArrayList<View> view_list;
 
-    protected ShoppingCart(Context context) {
+    public ShoppingCart(Context context) {
         super(context, R.layout.page_shoppign_card);
     }
 

@@ -33,7 +33,7 @@ public class MyHome extends PageLoader {
     private Handler handler;
     private Random random;
 
-    protected MyHome(Context context) {
+    public MyHome(Context context) {
         super(context, R.layout.page_my_home);
         random = new Random(System.currentTimeMillis());
         handler = new Handler(Looper.getMainLooper());

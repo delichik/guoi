@@ -28,12 +28,12 @@ public abstract class PageLoader {
         }
     };
 
-    protected PageLoader(Context context, int id) {
+    public PageLoader(Context context, int id) {
         this.page_view = View.inflate(context, id, null);
         this.context = context;
     }
 
-    protected PageLoader(Context context, View view) {
+    public PageLoader(Context context, View view) {
         this.page_view = view;
         this.context = context;
     }
