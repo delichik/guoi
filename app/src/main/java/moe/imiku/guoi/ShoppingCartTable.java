@@ -23,16 +23,17 @@ public class ShoppingCartTable {
             for (int i = 0; i < ShoppingCartTable.getCartSize(); i++) {
                 if (ShoppingCartTable.getCart(i).getFruit().getId().equals(item.getFruit().getId())) {
                     cart_list.get(i).setCount(cart_list.get(i).getCount() + item.getCount());
-                    MessageTable.sendMessage(context,
+                    MessageTable.sendMessageAndToast(context,
                             item.getFruit().getName()
                                     + " x "
                                     + item.getCount()
                                     + "已添加到购物车");
+                    sendChangedMessage();
                     return;
                 }
             }
             cart_list.add(item.clone());
-            MessageTable.sendMessage(context,
+            MessageTable.sendMessageAndToast(context,
                     item.getFruit().getName()
                             + " x "
                             + item.getCount()
@@ -41,32 +42,9 @@ public class ShoppingCartTable {
         });
     }
 
-    public static void removeCart (int index) {
-        cart_list.remove(index);
-        sendChangedMessage();
-    }
-
-
     public static void removeAllCart () {
         cart_list.clear();
         sendChangedMessage();
-    }
-
-    public static void removeAllCartNoCallback () {
-        cart_list.clear();
-    }
-
-    public static void minCart (int index) {
-        cart_list.get(index).setCount(cart_list.get(index).getCount() - 1);
-        sendChangedMessage();
-    }
-
-    public static void addToCartNoCallback (int index) {
-        cart_list.get(index).setCount(cart_list.get(index).getCount() + 1);
-    }
-
-    public static void minCartNoCallback (int index) {
-        cart_list.get(index).setCount(cart_list.get(index).getCount() - 1);
     }
 
     public static CartItem getCart (int index) {
@@ -95,16 +73,29 @@ public class ShoppingCartTable {
         }
     }
 
-    public static boolean payAll() {
+    public static void payAll(Context context) {
+        if (!AccountManager.isLogined()) {
+            MessageTable.sendToast(context, R.string.please_login_first);
+            return;
+        }
         double totalPrice = 0;
         for (int i = 0; i < cart_list.size(); i++) {
             totalPrice += ShoppingCartTable.getCart(i).getTotalPrice();
         }
-        boolean r = CurrentUser.pay(totalPrice);
-        if (r) {
-            cart_list.clear();
-            sendChangedMessage();
-        }
-        return r;
+
+        AccountManager.pay(totalPrice, (code) -> {
+            switch ((int)code){
+                case AccountManager.USER_DATA_UPDATE_OK:
+                    cart_list.clear();
+                    sendChangedMessage();
+                    break;
+                case AccountManager.USER_DATA_UPDATE_ERR_NO_ENOUGH_MONEY:
+                    MessageTable.sendToast(context, R.string.no_enough_money);
+                    break;
+                case AccountManager.USER_DATA_UPDATE_ERR_NOT_LOGINED_YET:
+                    MessageTable.sendToast(context, R.string.please_login_first);
+                    break;
+            }
+        });
     }
 }

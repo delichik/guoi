@@ -74,23 +74,21 @@ public class MainActivity extends Activity {
         }};
 
         nav_list = new ArrayList<View>() {{
+            View view;
+            TextView textView;
+            ImageView imageView;
             for (int i = 0; i < configs.size(); i++) {
                 PageConfig config = configs.get(i);
-
-                View view = View.inflate(MainActivity.this, R.layout.item_nav, null);
-                TextView textView = view.findViewById(R.id.title);
+                view = View.inflate(MainActivity.this, R.layout.item_nav, null);
+                textView = view.findViewById(R.id.title);
                 textView.setText(config.getTitle());
-                ImageView image = view.findViewById(R.id.image);
-                image.setImageBitmap(getBitmapFromAsset(getAssets(), config.getIcon()));
+                imageView = view.findViewById(R.id.image);
+                imageView.setImageBitmap(getBitmapFromAsset(getAssets(), config.getIcon()));
                 if (config.getTitle().contains("购物车"))
                     cart_page_position = i;
                 final int fi = i;
-                view.setOnClickListener(v -> {
-//                    for (int t = 0; t < nav_list.size(); t++)
-//                        nav_list.get(t).setBackgroundColor(getResources().getColor(R.color.background_nav));
-//                    nav_list.get(fi).setBackgroundColor(getResources().getColor(R.color.background_nav_dark));
-                    ((ViewPager) MainActivity.this.findViewById(R.id.pager)).setCurrentItem(fi);
-                });
+                view.setOnClickListener(v ->
+                        pager.setCurrentItem(fi));
                 if (i == 0)
                     view.setBackgroundColor(getResources().getColor(R.color.background_nav_dark));
                 add(view);

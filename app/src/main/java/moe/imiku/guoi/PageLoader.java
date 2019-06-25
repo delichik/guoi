@@ -13,9 +13,9 @@ import moe.imiku.guoi.Model.ImageViewLoaderItem;
 import moe.imiku.guoi.Util.NetResourceUtil;
 
 public abstract class PageLoader {
-    protected View page_view;
+    private View page_view;
     protected Context context;
-    protected boolean loaded = false;
+    private boolean loaded = false;
     private Handler handler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             switch (msg.what) {

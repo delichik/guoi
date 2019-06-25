@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">果i</string>
+    <string name="copyright_simple">展示数据、设计灵感来源于“水果之家” APP\n
+powered by iMIKU.moe / jsdelivr</string>
+    <string name="copyright">&#160;&#160;展示数据、设计灵感来源于“水果之家” APP（作者未知）\n
+        &#160;&#160;远程数据存放于 Github (https://github.com/asterdust/guoi-cdn/)，jsdelivr 提供 cdn 服务\n
+        &#160;&#160;登录工具运行于 iMIKU.moe (https://app.imiku.moe/guoi/)\n
+        &#160;&#160;delichik@iMIKU.moe &amp; Yship 版权所有</string>
+    
+    <string name="title_detail">水果详情</string>
+    <string name="title_class">分类</string>
+    <string name="title_message">消息</string>
+    <string name="title_shopping_cart">购物车</string>
+    <string name="title_login">登录</string>
+
+    <string name="price_all">总价:</string>
+    <string name="add_to_cart">加入购物车</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+    <string name="username">用户名</string>
+    <string name="money_remain">当前余额：</string>
+    <string name="prize_draw">血统测验</string>
+    <string name="prize_draw_describe">只需50元，以小博大，乐趣无穷</string>
+    <string name="login_now_describe">登录立享专属抽奖</string>
+    <string name="login_now">立即登录</string>
+    <string name="clear">清空</string>
+    <string name="pay">支付</string>
+    <string name="no_item_in_cart">购物车为空</string>
+    <string name="please_login_first">请先登录</string>
+    <string name="no_enough_money">你的余额不足</string>
+    <string name="login_failed">登录失败</string>
+    <string name="login_success">登录成功</string>
+    <string name="password_should_not_be_empty">密码不能为空</string>
+    <string name="username_should_not_be_empty">用户名不能为空</string>
+    <string name="got_money_win">，小赚</string>
+    <string name="got_money_fail">，非洲人</string>
+    <string name="logout">退出登录？</string>
+    <string name="sure">确定</string>
+    <string name="cancel">手滑了</string>
+    <string name="in_logining">登陆中…</string>
+
+    <string name="_format_money">￥%.2f</string>
+    <string name="_format_got_money">获得 %.2f 元</string>
+    <string name="title_copyright">说明</string>
 </resources>

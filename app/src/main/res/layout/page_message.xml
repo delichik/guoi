@@ -27,7 +27,7 @@
         android:textColor="@color/text_light"
         android:gravity="center"
         android:textSize="22sp"
-        android:text="消息"
+        android:text="@string/title_message"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="50dp" />

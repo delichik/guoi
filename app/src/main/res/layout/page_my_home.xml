@@ -22,8 +22,9 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerCrop"
-            app:civ_border_width="1dp"
-            app:civ_border_color="@color/colorAccent"/>
+            app:civ_circle_background_color="@color/background"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/user_name"
@@ -56,14 +57,13 @@
 
             <TextView
                 android:textSize="24sp"
-                android:text="当前余额："
+                android:text="@string/money_remain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/money"
                 android:textSize="24sp"
-                android:text="1000元"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -72,7 +72,7 @@
         <Button
             android:id="@+id/give_me_money"
             android:textSize="26sp"
-            android:text="血统测验"
+            android:text="@string/prize_draw"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingStart="30dp"
@@ -83,9 +83,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <ProgressBar
+            android:id="@+id/wait"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp" />
+
         <TextView
             android:layout_marginTop="5dp"
-            android:text="只需50元，以小博大，乐趣无穷"
+            android:text="@string/prize_draw_describe"
             android:textSize="12sp"
             android:textColor="@color/text_grey"
             android:layout_width="wrap_content"
@@ -93,5 +100,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/login_cover"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:textSize="18sp"
+            android:text="@string/login_now_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/main_button"
+            android:paddingStart="30dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="10dp"
+            android:text="@string/login_now"
+            android:textColor="@color/text_light"
+            android:textSize="20sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

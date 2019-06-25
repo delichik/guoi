@@ -1,8 +1,8 @@
 package moe.imiku.guoi.Util;
 
 public class DoubleUtil {
-    public static double getDouble(String v) {
 
+    public static double getDouble(String v) {
         double out = 0;
         boolean haveNum = false;
         int point = 0;

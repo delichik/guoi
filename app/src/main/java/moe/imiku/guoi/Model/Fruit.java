@@ -57,7 +57,7 @@ public class Fruit implements Parcelable {
     }
 
     public String getImage() {
-        return Config.BASE_INFO_URL + image;
+        return Config.BASE_CDN_URL + image;
     }
 
     public void setImage(String image) {
