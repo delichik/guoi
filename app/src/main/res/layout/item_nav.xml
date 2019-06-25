@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/image"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@mipmap/ic_launcher"
         android:layout_width="30dp"
         android:layout_height="30dp" />
 

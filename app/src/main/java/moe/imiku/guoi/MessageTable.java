@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +20,7 @@ public class MessageTable {
     private static Toast toast = null;
     private static Handler handler = new Handler(Looper.getMainLooper());
 
-    public static void sendMessage (Context context, String msg) {
+    public static void sendMessageAndToast (Context context, String msg) {
         Message message = new Message();
         message.setMessage(msg);
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
@@ -32,6 +34,23 @@ public class MessageTable {
             toast.show();
 
             if (listener != null) listener.onChanged(message);
+        });
+    }
+
+    public static void sendMessageAndToast (Context context, @StringRes int msg) {
+        sendMessageAndToast(context, context.getResources().getString(msg));
+    }
+
+    public static void sendToast (Context context, @StringRes int id) {
+        sendToast(context, context.getResources().getString(id));
+    }
+
+    public static void sendToast (Context context, String msg) {
+        handler.post(() -> {
+            if (toast != null)
+                toast.cancel();
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+            toast.show();
         });
     }
 

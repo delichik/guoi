@@ -77,7 +77,9 @@ public static class VH extends RecyclerView.ViewHolder{
         Fruit fruit = fruits.get(position);
 
         holder.name.setText(fruit.getName());
-        holder.price.setText(String.format("￥%.2f/kg", fruit.getPrice()));
+        holder.price.setText(
+                String.format(context.getResources().getString(R.string._format_money),
+                fruit.getPrice()));
         holder.itemView.setOnClickListener(v -> {
             ((MainActivity) context).toDetail(fruits.get(position));
         });

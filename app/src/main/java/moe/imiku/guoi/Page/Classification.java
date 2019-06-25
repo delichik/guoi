@@ -18,8 +18,8 @@ import moe.imiku.guoi.R;
 
 public class Classification extends PageLoader {
 
-    RadioGroup headerField;
-    RecyclerView fruitField;
+    private RadioGroup headerField;
+    private RecyclerView fruitField;
     private FruitProvider fruitProvider;
 
     protected Classification(Context context) {
@@ -60,22 +60,6 @@ public class Classification extends PageLoader {
 
     private void refreshList(String class_name) {
         fruitField.setAdapter(new ClassRecycleAdapter(fruitProvider.getFruitsByClass(class_name), context));
-//        fruitField.removeAllViews();
-//        new Thread(() -> {
-//            for (Fruit fruit : fruitProvider.getFruitsByClass(class_name)) {
-//                View view = View.inflate(context, R.layout.item_class, null);
-//                ((TextView) view.findViewById(R.id.name)).setText(fruit.getName());
-//                ((TextView) view.findViewById(R.id.price)).setText(String.format("￥%.2f/kg", fruit.getPrice()));
-//                ((TextView) view.findViewById(R.id.id)).setText(fruit.getId());
-//                view.setOnClickListener(v -> {
-//                    String id = ((TextView) view.findViewById(R.id.id)).getText().toString();
-//                    ((MainActivity) context).toDetail(fruitProvider.getFruitById(id));
-//                });
-//                ImageView image = view.findViewById(R.id.image);
-//                image.setImageBitmap(getBitmapFromAsset(context.getAssets(), fruit.getImage()));
-//                runInMainThread(() -> fruitField.addView(view));
-//            }
-//        }).start();
     }
 
     @Override
