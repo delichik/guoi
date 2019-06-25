@@ -12,7 +12,7 @@ import moe.imiku.guoi.PageLoader;
 import moe.imiku.guoi.R;
 
 public class Main extends PageLoader {
-    protected Main(Context context) {
+    public Main(Context context) {
         super(context, R.layout.page_main);
     }
 

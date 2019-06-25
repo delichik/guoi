@@ -12,7 +12,7 @@ import moe.imiku.guoi.R;
 public class Message extends PageLoader {
     private LinearLayout message_field;
 
-    protected Message(Context context) {
+    public Message(Context context) {
         super(context, R.layout.page_message);
     }
 

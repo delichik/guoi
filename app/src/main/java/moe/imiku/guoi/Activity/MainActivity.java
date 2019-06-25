@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
         ArrayList<PageLoader> view_list = new ArrayList<PageLoader>() {{
             try {
                 for (PageConfig config : configs) {
-                    Constructor constructor = Class.forName("moe.imiku.guoi.Page." + config.getClass_name())
+                    Constructor constructor = Class.forName(getPackageName() + ".Page." + config.getClass_name())
                             .getConstructor(Context.class);
                     add((PageLoader) constructor.newInstance(MainActivity.this));
                 }
